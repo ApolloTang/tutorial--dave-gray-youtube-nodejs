@@ -16,7 +16,6 @@ const {
 
 const filenameWithPath = path.join(__dirname, 'files', 'created-text-file3.txt')
 const newFilenameWithPath = path.join(__dirname, 'files', 'created-text-file4.txt')
-const content = 'new content\n'
 
 const fileOps = async () => {
   try  {
