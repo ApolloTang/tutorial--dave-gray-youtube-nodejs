@@ -1,0 +1,19 @@
+{
+  "name": "03-node-events-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon"
+  },
+  "keywords": [],
+  "author": "Apollo Tang",
+  "license": "MIT",
+  "qutoName": "Apollo Tang",
+  "autherEmail": "tang.apollo@gmail.com",
+  "dependencies": {
+    "date-fns": "^2.29.3",
+    "uuid": "^9.0.0"
+  }
+}
