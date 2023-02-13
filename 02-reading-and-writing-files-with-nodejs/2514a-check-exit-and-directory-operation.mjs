@@ -15,18 +15,23 @@ const {
 
 async function createDir(dirToCreate) {
   if (!fs.existsSync(dirToCreate)) {
-    await mkdir(dirToCreate).then(
-      () => console.log('directory created'),
-      err => console.log('make directory failed')
-    )
+    try {
+      await mkdir(dirToCreate)
+      console.log('directory created'),
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 
-async function removeDir(dirToCreate) {
-  if (fs.existsSync(dirToCreate)) {
-    await rmdir(dirToCreate).then(
-      () => console.log('directory removed'),
-      err => console.log('remove directory failed')
+async function removeDir(dirToRemove) {
+  if (fs.existsSync(dirToRemove)) {
+      try {
+        await rmdir(dirToCreate)
+        console.log('directory removed'),
+      } catch (err) {
+        console.log(err)
+      }
     )
   }
 }
