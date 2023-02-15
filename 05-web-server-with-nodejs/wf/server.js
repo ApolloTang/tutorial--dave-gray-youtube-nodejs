@@ -14,6 +14,11 @@ class Emitter extends EventEmitter {}
 
 const PORT = process.env.PORT || 3500
 
+const serveFile = async (filePath, contentType, response) => {
+  // todo
+
+}
+
 const server = http.createServer((req, res) =>{
   console.log('xxx', req.url, req.method)
     const extension = path.extname(req.url);
@@ -58,9 +63,22 @@ const server = http.createServer((req, res) =>{
     const fileExists = fs.existsSync(filePath);
 
     if (fileExists) {
-        // serveFile(filePath, contentType, res);
+        serveFile(filePath, contentType, res);
     } else {
-      console.log(path.parse(filePath))
+      // console.log(filePath)
+      // console.log(path.parse(filePath))
+      switch(path.parse(filePath).base) {
+            case 'old-page.html':
+                res.writeHead(301, { 'Location': '/new-page.html' });
+                res.end();
+                break;
+            case 'www-page.html':
+                res.writeHead(301, { 'Location': '/' });
+                res.end();
+                break;
+            default:
+                serveFile(path.join(__dirname, 'views', '404.html'), 'text/html', res);
+      }
     }
 })
 const emitter = new Emitter()
