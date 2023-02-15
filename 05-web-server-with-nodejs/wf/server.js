@@ -12,11 +12,23 @@ const __dirname = path.dirname(__filename)
 const fsPromises = fs.promises
 class Emitter extends EventEmitter {}
 
+const emitter = new Emitter()
+emitter.on(`log`, msg => { logEvents(msg) })
 const PORT = process.env.PORT || 3500
 
 const serveFile = async (filePath, contentType, response) => {
-  // todo
-
+    try {
+      const data = await fsPromises.readFile(filePath, 'utf8')
+        console.log(filePath)
+        console.log(contentType)
+        response.writeHead(200, { 'Content-Type': contentType })
+        response.end(data)
+    } catch (err) {
+        console.log(err);
+        emitter.emit('log', `${err.name}: ${err.message}`, 'errLog.txt');
+        response.statusCode = 500;
+        response.end();
+    }
 }
 
 const server = http.createServer((req, res) =>{
@@ -81,13 +93,11 @@ const server = http.createServer((req, res) =>{
       }
     }
 })
-const emitter = new Emitter()
 
 
 
-// myEmitter.on(`log`, msg => {
-//   logEvents(msg)
-// })
+
+
 //
 // setTimeout(()=>{
 //   emitter.emit('log', 'Log event emitted')
