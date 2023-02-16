@@ -18,9 +18,20 @@ const PORT = process.env.PORT || 3500
 
 const serveFile = async (filePath, contentType, response) => {
     try {
+      console.log('filePath: ', filePath)
+
       const data = await fsPromises.readFile(filePath, 'utf8')
-        console.log(filePath)
-        console.log(contentType)
+      console.log('data:', data)
+
+      const dataAfterParse = JSON.stringify(JSON.parse(data))
+      console.log('dataAfterParse:', dataAfterParse)
+
+      const dataShowNewline = data.replace(/\n/g, '\\n')
+      console.log('dataShowNewline:', dataShowNewline)
+
+      const dataAfterParseShowNewLine =  dataAfterParse.replace(/\n/g, '\\n')
+      console.log('dataAfterParseShowNewLine:', dataAfterParseShowNewLine)
+
         response.writeHead(200, { 'Content-Type': contentType })
         response.end(data)
     } catch (err) {
@@ -59,6 +70,7 @@ const server = http.createServer((req, res) =>{
         default:
             contentType = 'text/html';
     }
+    // console.log('contentType:', contentType)
 
     let filePath =
         contentType === 'text/html' && req.url === '/'
@@ -73,12 +85,12 @@ const server = http.createServer((req, res) =>{
     if (!extension && req.url.slice(-1) !== '/') filePath += '.html';
 
     const fileExists = fs.existsSync(filePath);
+    // console.log('filePath: ', filePath)
+    // console.log('fileExists: ', fileExists)
 
     if (fileExists) {
         serveFile(filePath, contentType, res);
     } else {
-      // console.log(filePath)
-      // console.log(path.parse(filePath))
       switch(path.parse(filePath).base) {
             case 'old-page.html':
                 res.writeHead(301, { 'Location': '/new-page.html' });
@@ -93,15 +105,6 @@ const server = http.createServer((req, res) =>{
       }
     }
 })
-
-
-
-
-
-//
-// setTimeout(()=>{
-//   emitter.emit('log', 'Log event emitted')
-// }, 2000)
 
 
 server.listen(PORT, ()=>{
