@@ -14,7 +14,7 @@ See:
 
 - [video 30:09](https://youtu.be/3ZAKY-CDKog?list=PL0Zuz27SZ-6PFkIxaJ6Xx_X46avTM1aYw&t=1809)
 
-
+---
 
 **Before:** passing JSON string through `JSON.parse JSON.stringify` pipe :
 
@@ -38,12 +38,16 @@ data: [
 Showing `\n` :
 
 ```js
-const dataShowNewline = data.replace(/\n/g, '\\n')
+const dataShowNewline = data.replace(/\n/g, '\\n') // Ref[1]
 console.log('dataShowNewline:', dataShowNewline)
 /*
 dataShowNewline: [\n    {\n        "firstname": "Dave",\n        "lastname": "Gray"\n    },\n    {\n        "firstname": "John",\n        "lastname": "Smith"\n    }\n]
 */
 ```
+
+[Ref [1]](https://stackoverflow.com/questions/9849754/how-can-i-replace-newlines-line-breaks-with-spaces-in-javascript)
+
+---
 
 **After** passing JSON string through `JSON.parse JSON.stringify` pipe :
 
