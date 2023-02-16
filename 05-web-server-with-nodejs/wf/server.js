@@ -23,7 +23,8 @@ const serveFile = async (filePath, contentType, response) => {
       const data = contentType === 'application/json'
         ? JSON.stringify(JSON.parse(rawData)) : rawData
 
-        response.writeHead(200, { 'Content-Type': contentType })
+      const status = filePath.includes('404.html') ? 404 : 200
+        response.writeHead(status, { 'Content-Type': contentType })
         response.end(data)
     } catch (err) {
         console.log(err);
