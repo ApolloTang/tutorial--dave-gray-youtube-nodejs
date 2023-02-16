@@ -1,0 +1,20 @@
+{
+  "name": "06-intro-to-expressjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon server"
+  },
+  "keywords": [],
+  "author": "Apollo Tang",
+  "license": "MIT",
+  "qutoName": "Apollo Tang",
+  "autherEmail": "tang.apollo@gmail.com",
+  "dependencies": {
+    "date-fns": "^2.29.3",
+    "express": "^4.18.2",
+    "uuid": "^9.0.0"
+  }
+}
