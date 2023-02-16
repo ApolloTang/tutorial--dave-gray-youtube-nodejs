@@ -9,15 +9,15 @@ const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const fsPromises = fs.promises
 
-const logEvents = async message => {
+const logEvents = async (message, logName) => {
   const dateTime = `${ format(new Date(), 'yyyMMdd\tHH:mm:ss') }`
-  const logItem = `${dateTime}\t${uuid()}}\t${message}\n`
+  const logItem = `${dateTime}\t${uuid()}\t${message}\n`
   console.log(logItem)
   try {
-    if (!fs.existsSync('logs')) {
+    if (!fs.existsSync(path.join(__dirname, 'logs'))) {
       await fsPromises.mkdir(path.join(__dirname, 'logs'))
     }
-    await fsPromises.appendFile(path.join(__dirname, 'logs', 'eventlog.txt'), logItem)
+    await fsPromises.appendFile(path.join(__dirname, 'logs', logName), logItem)
   } catch (err) {
      console.error(err)
   }

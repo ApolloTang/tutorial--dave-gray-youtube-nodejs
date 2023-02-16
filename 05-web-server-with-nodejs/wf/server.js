@@ -13,7 +13,7 @@ const fsPromises = fs.promises
 class Emitter extends EventEmitter {}
 
 const emitter = new Emitter()
-emitter.on(`log`, msg => { logEvents(msg) })
+emitter.on(`log`, (msg, fileName) => logEvents(msg, fileName))
 const PORT = process.env.PORT || 3500
 
 const serveFile = async (filePath, contentType, response) => {
@@ -36,6 +36,7 @@ const serveFile = async (filePath, contentType, response) => {
 
 const server = http.createServer((req, res) =>{
   console.log('xxx', req.url, req.method)
+  emitter.emit('log', `${req.url}\t${req.method}`, 'reqLog.txt');
     const extension = path.extname(req.url);
 
     let contentType;
