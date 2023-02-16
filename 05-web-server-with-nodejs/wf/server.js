@@ -18,19 +18,9 @@ const PORT = process.env.PORT || 3500
 
 const serveFile = async (filePath, contentType, response) => {
     try {
-      console.log('filePath: ', filePath)
-
-      const data = await fsPromises.readFile(filePath, 'utf8')
-      console.log('data:', data)
-
-      const dataAfterParse = JSON.stringify(JSON.parse(data))
-      console.log('dataAfterParse:', dataAfterParse)
-
-      const dataShowNewline = data.replace(/\n/g, '\\n')
-      console.log('dataShowNewline:', dataShowNewline)
-
-      const dataAfterParseShowNewLine =  dataAfterParse.replace(/\n/g, '\\n')
-      console.log('dataAfterParseShowNewLine:', dataAfterParseShowNewLine)
+      const rawData = await fsPromises.readFile(filePath, 'utf8')
+      const data = contentType === 'application/json'
+        ? JSON.stringify(JSON.parse(rawData)) : rawData
 
         response.writeHead(200, { 'Content-Type': contentType })
         response.end(data)
