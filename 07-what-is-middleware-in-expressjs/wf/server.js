@@ -122,6 +122,21 @@ app.get(`/*`, (req, res) => {
 })
 
 
+//
+// Error handling
+//
+app.use((err, req, res, next) => {
+  // With this handler present, error will not longer log into terminal.
+  // You can still access to the error in the formal-parameters `err`
+  //
+  // To create error, remove https://www.google.com from
+  // CORS whitelist and do a fetch('http://localhost:3500') in
+  // browser's console from https://www.google.com
+  //
+  console.error('error.stack: ------ \n', err.stack)
+  res.status(500).send(err.message)
+})
+
 app.listen(PORT, ()=>{
   console.log(`Server running on port ${PORT}`)
 })
