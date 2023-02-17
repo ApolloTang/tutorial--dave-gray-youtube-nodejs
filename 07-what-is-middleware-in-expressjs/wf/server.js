@@ -36,8 +36,10 @@ const whitelist = process.env.production
 const corsOptions = {
   origin: (origin, callback) => {
     const  isOriginInWhitelist = whitelist.indexOf(origin) !== -1
-    const  isOriginNotFalsy = !origin
-    if (isOriginInWhitelist || isOriginNotFalsy) {
+    if (
+      isOriginInWhitelist
+      || (!process.env.production && !origin)  // During devlopment `req.heqders.origin` is undefined.
+    ) {
       callback(null, true) // allow
     } else {
       callback(new Error('Not allowed by CORS'));
