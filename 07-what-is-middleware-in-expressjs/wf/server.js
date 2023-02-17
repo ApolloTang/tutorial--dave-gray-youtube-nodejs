@@ -2,12 +2,25 @@ import path from 'node:path'
 import url from 'node:url'
 import express from 'express'
 
+import {logger, logEvents} from  './middleware/logEvents.js'
+
 const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const PORT = process.env.PORT || 3500
 
 const app = express()
+
+
+//
+// Custom middleware
+//
+app.use( (req, res, next) =>{
+  // do stuff here
+  next()
+})
+app.use( logEvents )
+app.use( logger )
 
 
 // express.urlencoded is a built-in middleware
@@ -17,6 +30,7 @@ app.use(express.urlencoded({ extended: false }))
 
 // build-in middleware to serve static files
 app.use(express.static(path.join(__dirname, '/public')));
+
 
 //
 // Sending text
