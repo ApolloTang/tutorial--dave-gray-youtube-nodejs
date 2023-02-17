@@ -15,8 +15,8 @@ const message = (req) => {
     ${uuid()}
     timeStemp:\t ${dateTime}
     req.method:\t ${req.method}
-    req.header:\t ${req.headers.origin}
-    req.referer:\t ${req.headers.referer}
+    req.header.origin:\t ${req.headers.origin}
+    req.header.referer:\t ${req.headers.referer}
     req.url:\t ${req.url}
   `
   // note that req.header is undefined if COR not set,
