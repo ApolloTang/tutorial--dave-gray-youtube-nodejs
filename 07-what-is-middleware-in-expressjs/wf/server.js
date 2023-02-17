@@ -15,6 +15,9 @@ const app = express()
 //   ‘content-type: application/x-www-form-urlencoded’
 app.use(express.urlencoded({ extended: false }))
 
+// build-in middleware to serve static files
+app.use(express.static(path.join(__dirname, '/public')));
+
 //
 // Sending text
 //
