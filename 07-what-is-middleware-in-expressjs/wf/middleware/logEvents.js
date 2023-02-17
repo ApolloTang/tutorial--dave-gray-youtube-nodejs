@@ -15,10 +15,12 @@ const message = (req) => {
     ${uuid()}
     timeStemp:\t ${dateTime}
     req.method:\t ${req.method}
-    req.header:\t ${req.headers.origin} // undefined if COR notset, see: https://stackoverflow.com/questions/29531521/req-headers-origin-is-undefined
+    req.header:\t ${req.headers.origin}
     req.referer:\t ${req.headers.referer}
     req.url:\t ${req.url}
   `
+  // note that req.header is undefined if COR not set,
+  // see: https://stackoverflow.com/questions/29531521/req-headers-origin-is-undefined
 }
 
 
