@@ -31,7 +31,7 @@ const whitelist = process.env.production
   ? ['https://www.yoursite.com']
   : [
     'http://127.0.0.1:5500', 'http://localhost:3500',
-    'https://www.google.com' // <--- allow fetch('http://localhost:3500') in browser's console from https://www.google.com
+    // 'https://www.google.com' // <--- This is to allow fetch('http://localhost:3500') in browser's console from https://www.google.com.
   ]
 const corsOptions = {
   origin: (origin, callback) => {
