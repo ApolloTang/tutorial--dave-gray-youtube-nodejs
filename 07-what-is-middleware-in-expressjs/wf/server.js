@@ -9,10 +9,22 @@ const PORT = process.env.PORT || 3500
 
 const app = express()
 
+
+// express.urlencoded is a built-in middleware
+// for handling urlencoded data. In other words, form data:
+//   ‘content-type: application/x-www-form-urlencoded’
+app.use(express.urlencoded({ extended: false }))
+
+//
+// Sending text
+//
 app.get('/hello-world', (req, res) => {
   res.send('hello world')
 })
 
+//
+// Sending file
+//
 app.get('^/$|/index(.html)?', (req, res) => {
   // res.sendFile('./views/index.html', { root: __dirname})
   res.sendFile(path.join(__dirname, 'views', 'index.html'))
@@ -23,16 +35,20 @@ app.get('/new-page(.html)?', (req, res) => {
 })
 
 
+//
+// Redirecting
+//
 app.get('/old-page(.html)?', (req, res) => {
-  // res.redirect('/new-page.html')     // 302 by default
-  res.redirect(301, '/new-page.html')   // change 302 to 301 for SEO
+  // res.redirect('/new-page.html')     // Status code is 302 if didn't specified.
+  res.redirect(301, '/new-page.html')   // But we should respond with 302 for SEO
                                         //   301 means moved permanently
                                         //   302 means moved temporarily
                                         //   https://www.searchenginejournal.com/301-vs-302-redirects-seo/299843/
 })
 
-
-// The following is the route handler
+//
+// Chaining route handlers
+//
 app.get('/try-out-route-handler', (req, res, next) => {
   console.log('try-out-route-handler')
   next()
@@ -43,13 +59,11 @@ app.get('/try-out-route-handler', (req, res, next) => {
   res.send('try-out-route-handler')
 })
 
-
 // Another route handler example:
 const one = (req, res, next) => { console.log('one'); next() }
 const two = (req, res, next) => { console.log('two'); next() }
 const three = (req, res) => { console.log('three'); res.send('finish') }
 app.get('/chain-123', [one, two, three])
-
 
 
 // catch all
@@ -58,6 +72,7 @@ app.get(`/*`, (req, res) => {
     .status(404)
     .sendFile(path.join(__dirname, 'views', '404.html'))
 })
+
 
 app.listen(PORT, ()=>{
   console.log(`Server running on port ${PORT}`)
