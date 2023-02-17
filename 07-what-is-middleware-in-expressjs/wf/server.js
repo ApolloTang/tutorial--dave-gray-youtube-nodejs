@@ -47,7 +47,12 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 
-// express.urlencoded is a built-in middleware
+
+//
+// Build in middleware
+//
+
+// built-in middleware express.urlencoded is
 // for handling urlencoded data. In other words, form data:
 //   ‘content-type: application/x-www-form-urlencoded’
 app.use(express.urlencoded({ extended: false }))
