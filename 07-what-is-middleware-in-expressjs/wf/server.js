@@ -1,6 +1,7 @@
 import path from 'node:path'
 import url from 'node:url'
 import express from 'express'
+import cors from 'cors'
 
 import {logger, logEvents} from  './middleware/logEvents.js'
 
@@ -22,6 +23,29 @@ app.use( (req, res, next) =>{
 app.use( logEvents )
 app.use( logger )
 
+
+//
+// Cross Origin Resource Sharing
+//
+const whitelist = process.env.production
+  ? ['https://www.yoursite.com']
+  : [
+    'http://127.0.0.1:5500', 'http://localhost:3500',
+    'https://www.google.com' // <--- allow fetch('http://localhost:3500') in browser's console from https://www.google.com
+  ]
+const corsOptions = {
+  origin: (origin, callback) => {
+    const  isOriginInWhitelist = whitelist.indexOf(origin) !== -1
+    const  isOriginNotFalsy = !origin
+    if (isOriginInWhitelist || isOriginNotFalsy) {
+      callback(null, true) // allow
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions));
 
 // express.urlencoded is a built-in middleware
 // for handling urlencoded data. In other words, form data:
