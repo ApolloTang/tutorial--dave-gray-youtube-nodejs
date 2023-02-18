@@ -9,7 +9,7 @@ const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const fsPromises = fs.promises
 
-const message = (req) => {
+const composeLogMessage = (req) => {
   const dateTime = `${ format(new Date(), 'yyyyMMdd HH:mm:ss') }`
   return `
     ${uuid()}
@@ -24,7 +24,7 @@ const message = (req) => {
 }
 
 
-const logToFile = async (message, logName) => {
+const saveLogToFile = async (message, logName) => {
   try {
     if (!fs.existsSync(path.join(__dirname, '..', 'logs'))) {
       await fsPromises.mkdir(path.join(__dirname, '..', 'logs'))
@@ -37,16 +37,18 @@ const logToFile = async (message, logName) => {
 
 
 const logEvents = (req, res, next) => {
-  logToFile(message(req), 'reqLog')
+  saveLogToFile(composeLogMessage(req), 'reqLog.txt')
   next()
 }
 
-const logger = (req, res, next) => {
-  console.log(message(req))
+const logToTerminal = (req, res, next) => {
+  console.log(composeLogMessage(req))
   next()
 }
 
 export {
-  logger,
+  saveLogToFile,
+
+  logToTerminal,
   logEvents
 }
