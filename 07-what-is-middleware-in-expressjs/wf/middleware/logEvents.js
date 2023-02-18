@@ -24,6 +24,17 @@ const composeLogMessage = (req) => {
 }
 
 
+const composeErrorLogMessage = (err) => {
+  const dateTime = `${ format(new Date(), 'yyyyMMdd HH:mm:ss') }`
+  return `
+    ${uuid()}
+    timeStemp:\t ${dateTime}
+    err.name:\t ${err.name}
+    err.message:\t ${err.message}
+  `
+}
+
+
 const saveLogToFile = async (message, logName) => {
   try {
     if (!fs.existsSync(path.join(__dirname, '..', 'logs'))) {
@@ -48,6 +59,7 @@ const logToTerminal = (req, res, next) => {
 
 export {
   saveLogToFile,
+  composeErrorLogMessage,
 
   logToTerminal,
   logEvents
