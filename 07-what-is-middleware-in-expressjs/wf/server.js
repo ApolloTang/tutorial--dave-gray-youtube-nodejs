@@ -125,6 +125,10 @@ app.get('/chain-123', [one, two, three])
 // catch all
 app.all(`*`, (req, res) => {
   res.status(404)
+  //
+  // TO READ:
+  //   https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation
+  //
   console.log('req.accepts(`html`): ', req.accepts(`html`))
   console.log('req.accepts(`json`): ', req.accepts(`json`))
   if (req.accepts(`html`)) {
