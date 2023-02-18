@@ -5,7 +5,7 @@ import cors from 'cors'
 
 import {logToTerminal, logEvents} from  './middleware/logEvents.js'
 import {errorHandler} from  './middleware/errorHandler.js'
-import data from './data/data.json' assert { type: "json" }
+import data from './data/data.json' assert { type: "json" }  // https://stackoverflow.com/a/70106896/3136861
 
 const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
