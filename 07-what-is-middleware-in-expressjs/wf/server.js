@@ -125,10 +125,11 @@ app.get('/chain-123', [one, two, three])
 // catch all
 app.all(`*`, (req, res) => {
   res.status(404)
-  // TODO
-  if (req.accepts(`text/html`)) {
+  if (req.accepts(`html`)) {
     res.sendFile(path.join(__dirname, 'views', '404.html'))
-  } else if (req.accepts('application/json')) {
+  } else if (req.accepts('json')) {
+    // you can check this with:
+    //   curl -H "Accept:application/json" http://localhost:3500/does-not-exist.json
     res.json({error: '404 NOT Found'})
   }
 })
