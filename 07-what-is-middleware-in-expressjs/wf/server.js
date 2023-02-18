@@ -116,10 +116,11 @@ app.get('/chain-123', [one, two, three])
 
 
 // catch all
-app.get(`/*`, (req, res) => {
-  res
-    .status(404)
-    .sendFile(path.join(__dirname, 'views', '404.html'))
+app.all(`*`, (req, res) => {
+  res.status(404)
+  if (req.accepts(`html`)) {
+    res.sendFile(path.join(__dirname, 'views', '404.html'))
+  }
 })
 
 
