@@ -5,6 +5,7 @@ import cors from 'cors'
 
 import {logToTerminal, logEvents} from  './middleware/logEvents.js'
 import {errorHandler} from  './middleware/errorHandler.js'
+import data from './data/data.json' assert { type: "json" }
 
 const __filename = url.fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -87,9 +88,7 @@ app.get('/new-page(.html)?', (req, res) => {
 })
 
 app.get('/data/data.json', (req, res) => {
-  // TODO
-  res.header("Content-Type",'application/json');
-  res.sendFile(path.join(__dirname, 'data', 'data.json'))
+  res.json(data)
 })
 
 //
