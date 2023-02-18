@@ -60,6 +60,9 @@ app.use(cors(corsOptions));
 //   ‘content-type: application/x-www-form-urlencoded’
 app.use(express.urlencoded({ extended: false }))
 
+// built-in middleware to handle json file.
+app.use(express.json());
+
 // build-in middleware to serve static files
 app.use(express.static(path.join(__dirname, '/public')));
 
@@ -83,6 +86,11 @@ app.get('/new-page(.html)?', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'new-page.html'))
 })
 
+app.get('/data/data.json', (req, res) => {
+  // TODO
+  res.header("Content-Type",'application/json');
+  res.sendFile(path.join(__dirname, 'data', 'data.json'))
+})
 
 //
 // Redirecting
@@ -118,8 +126,11 @@ app.get('/chain-123', [one, two, three])
 // catch all
 app.all(`*`, (req, res) => {
   res.status(404)
-  if (req.accepts(`html`)) {
+  // TODO
+  if (req.accepts(`text/html`)) {
     res.sendFile(path.join(__dirname, 'views', '404.html'))
+  } else if (req.accepts('application/json')) {
+    res.json({error: '404 NOT Found'})
   }
 })
 
